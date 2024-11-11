@@ -1,0 +1,26 @@
+<app-header></app-header>
+<!-- quiz-dashboard.component.html -->
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="container text-center">
+      <h1 class="mb-4">Quiz Dashboard</h1>
+      
+      <!-- Quiz Selection Dropdown with Two-Way Binding -->
+      <div class="dropdown mb-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="quizDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ selectedQuiz || 'Select Quiz' }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="quizDropdown">
+            <li *ngFor="let quiz of quizList" (click)="selectQuiz(quiz.id)">
+                <a class="dropdown-item">{{ quiz.title }}</a>
+            </li>
+        </ul>
+      </div>
+  
+      <!-- Buttons -->
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-primary" (click)="createQuiz()">Create Quiz</button>
+        <button class="btn btn-success" [disabled]="!selectedQuiz" (click)="startQuiz()">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+  
