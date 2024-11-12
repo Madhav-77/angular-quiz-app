@@ -6,7 +6,7 @@
         <h2 class="text-center mb-4">Question {{ currentQuestion + 1 }}</h2>
 
         <div class="mb-3">
-          <p>{{ quizData.questions[currentQuestion].questionText }}</p>
+          <p>{{ quizData.questions[currentQuestion].text }}</p>
 
           <div *ngFor="let option of quizData.questions[currentQuestion].options; let i = index">
             <div class="form-check">
@@ -20,7 +20,7 @@
           Submit Answer
         </button>
 
-        <div *ngIf="answerSubmitted" [ngClass]="{'alert alert-success': isCorrect, 'alert alert-danger': !isCorrect}">
+        <div class="alert" *ngIf="answerSubmitted" [ngClass]="{'alert-success': isCorrect, 'alert-danger': !isCorrect}">
             <p *ngIf="isCorrect">{{ feedbackMessage }}</p>
             <p *ngIf="!isCorrect">{{ feedbackMessage }}</p>
         </div>

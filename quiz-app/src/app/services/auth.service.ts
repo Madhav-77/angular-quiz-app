@@ -19,9 +19,9 @@ export class AuthService {
   signup(user: IUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register/`, user).pipe(
       map(response => {
-        this.storeToken(response.access);
+        this.storeToken(response.data.access);
         this.currentUserSubject.next(response.data);
-        localStorage.setItem("currentUser", JSON.parse(response.data));
+        localStorage.setItem("currentUser", JSON.stringify(response.data));
         return response;
       }),
       catchError(this.handleError)

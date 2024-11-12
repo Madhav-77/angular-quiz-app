@@ -8,16 +8,16 @@ import { ICreateQuiz, ISubmitAnswer } from '../interfaces/quiz.interface';
   providedIn: 'root'
 })
 export class QuizService {
-  private apiUrl = `${environment.apiUrl}quiz/api`;
+  private apiUrl = `${environment.apiUrl}quiz/api/quizzes`;
   
   constructor(private http: HttpClient) { }
 
   getQuizzes(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/quiz_list/`);
+    return this.http.get<any>(`${this.apiUrl}/`);
   }
 
   getQuiz(id: number): Observable<any> { 
-    return this.http.get<any>(`${this.apiUrl}/display/${id}/`).pipe(
+    return this.http.get<any>(`${this.apiUrl}/${id}/`).pipe(
       map(response => {
         return response;
       }),
@@ -35,7 +35,7 @@ export class QuizService {
   }
 
   submitAnswer(answer: ISubmitAnswer): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/submit_answer/`, answer).pipe(
+    return this.http.post<any>(`${this.apiUrl}/submit/`, answer).pipe(
       map(response => {
         return response;
       }),
@@ -44,7 +44,7 @@ export class QuizService {
   }
 
   getResult(user_id: number, quiz_id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/results/${quiz_id}/${user_id}/`).pipe(
+    return this.http.get<any>(`${this.apiUrl}/${quiz_id}/users/${user_id}/results/`).pipe(
       map(response => {
         return response;
       }),

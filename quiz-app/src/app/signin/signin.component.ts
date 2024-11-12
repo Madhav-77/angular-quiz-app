@@ -18,7 +18,7 @@ export class SigninComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.authForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      username: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z0-9@.+\-_]+$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }

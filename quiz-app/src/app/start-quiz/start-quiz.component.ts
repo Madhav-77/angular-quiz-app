@@ -45,15 +45,15 @@ export class StartQuizComponent {
 
   submitAnswer() {
     console.log(this.selectedAnswer)
-    this.answerSubmitted = true;
     const currentQuestionID = this.quizData.questions[this.currentQuestion].id;
     if (this.currentQuestion === this.quizData.questions.length - 1) {
       this.quizCompleted = true;
     }
     this.quizService.submitAnswer({ question_id: parseInt(currentQuestionID), selected_option: this.selectedAnswer }).subscribe({
       next: (data) => (
+        this.feedbackMessage = data.message,
         this.isCorrect = data.is_correct,
-        this.feedbackMessage = data.message
+        this.answerSubmitted = true
       ),
       error: (err) => console.error('Error submitting answer', err),
     });
