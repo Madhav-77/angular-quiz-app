@@ -1,0 +1,58 @@
+<app-header></app-header>
+<div class="container mt-4">
+    <h2 class="text-center">Create Quiz</h2>
+  
+    <form [formGroup]="quizForm" (ngSubmit)="submitForm()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Quiz Title</label>
+        <input type="text" id="title" formControlName="title" class="form-control" placeholder="Enter quiz title" />
+        <div *ngIf="quizForm?.get('title')?.invalid && quizForm.get('title')?.touched" class="text-danger">
+          Title is required and should not exceed 200 characters.
+        </div>
+      </div>
+  
+      <div formArrayName="questions">
+        <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="mb-4 card p-3">
+          <h4>Question {{ i + 1 }}</h4>
+  
+          <div class="mb-3">
+            <label for="questionText{{ i }}" class="form-label">Question</label>
+            <input type="text" id="questionText{{ i }}" formControlName="text" class="form-control" placeholder="Enter question" />
+          </div>
+          <div formArrayName="options" class="row">
+            <div class="col-md-6 mb-3">
+                <label for="option1_{{ i }}" class="form-label">Option 1</label>
+                <input type="text" id="option1_{{ i }}" formControlName="0" class="form-control" placeholder="Enter option 1"/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="option2_{{ i }}" class="form-label">Option 2</label>
+                <input type="text" id="option2_{{ i }}" formControlName="1" class="form-control" placeholder="Enter option 2"/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="option3_{{ i }}" class="form-label">Option 3</label>
+                <input type="text" id="option3_{{ i }}" formControlName="2" class="form-control" placeholder="Enter option 3"/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="option4_{{ i }}" class="form-label">Option 4</label>
+                <input type="text" id="option4_{{ i }}" formControlName="3" class="form-control" placeholder="Enter option 4"/>
+            </div>
+        </div>
+  
+          <div class="mb-3">
+            <label for="correctAnswer{{ i }}" class="form-label">Correct Answer</label>
+            <select id="correctAnswer{{ i }}" formControlName="correct_option" class="form-select">
+              <option value="" disabled selected>Select correct answer</option>
+              <option value=1>Option 1</option>
+              <option value=2>Option 2</option>
+              <option value=3>Option 3</option>
+              <option value=4>Option 4</option>
+            </select>
+          </div>
+        </div>
+      </div>
+  
+      <div class="mt-3 text-center">
+        <button type="submit" class="btn btn-success" [disabled]="quizForm.invalid">Create Quiz</button>
+      </div>
+    </form>
+  </div>

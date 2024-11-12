@@ -6,12 +6,20 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('../app/signin/signin.component').then(mod => mod.SigninComponent)
-        // canActivate: [domainGuard],
     },
     {
         path: 'home',
         canActivate: [authGuard],
         loadComponent: () => import('../app/home/home.component').then(mod => mod.HomeComponent)
-        // canActivate: [domainGuard],
+    },
+    {
+        path: 'create-quiz',
+        canActivate: [authGuard],
+        loadComponent: () => import('../app/create-quiz/create-quiz.component').then(mod => mod.CreateQuizComponent)
+    },
+    {
+        path: 'start-quiz/:id',
+        canActivate: [authGuard],
+        loadComponent: () => import('../app/start-quiz/start-quiz.component').then(mod => mod.StartQuizComponent)
     }
 ];

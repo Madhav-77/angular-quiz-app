@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-logout-button',
@@ -10,10 +11,10 @@ import { Router } from '@angular/router';
 })
 export class LogoutButtonComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
   
   logout() {
-    localStorage.removeItem('jwt_token');  // Remove JWT or any token you use
-    this.router.navigate(['/']);     // Redirect to the signin page
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="container d-flex justify-content-center align-items-center vh-100 flex-column">
+    <h1 class="mb-4">{{ quizData.title }}</h1>
+    <div class="card p-4" style="width: 500px;">
+      <div *ngIf="currentQuestion < quizData?.questions?.length">
+        <h2 class="text-center mb-4">Question {{ currentQuestion + 1 }}</h2>
+
+        <div class="mb-3">
+          <p>{{ quizData.questions[currentQuestion].questionText }}</p>
+
+          <div *ngFor="let option of quizData.questions[currentQuestion].options; let i = index">
+            <div class="form-check">
+              <input type="radio" [id]="'option' + i" name="answer" [(ngModel)]="selectedAnswer" class="form-check-input" [value]="i + 1" required/>
+              <label class="form-check-label" [for]="'option' + i">{{ option }}</label>
+            </div>
+          </div>
+        </div>
+
+        <button *ngIf="!answerSubmitted" class="btn btn-primary w-100" [disabled]="selectedAnswer === null" (click)="submitAnswer()">
+          Submit Answer
+        </button>
+
+        <div *ngIf="answerSubmitted" [ngClass]="{'alert alert-success': isCorrect, 'alert alert-danger': !isCorrect}">
+            <p *ngIf="isCorrect">{{ feedbackMessage }}</p>
+            <p *ngIf="!isCorrect">{{ feedbackMessage }}</p>
+        </div>
+
+        <div *ngIf="answerSubmitted">
+          <button *ngIf="currentQuestion < quizData.questions.length - 1" class="btn btn-secondary w-100 mt-3" (click)="nextQuestion()" >
+            Next Question
+          </button>
+          <button *ngIf="currentQuestion === quizData.questions.length - 1" class="btn btn-success w-100 mt-3" (click)="viewResults()" >
+            View Results
+          </button>
+        </div>
+      </div>
+
+        <div *ngIf="quizCompleted" class="text-center">
+            <h3>Quiz Completed!</h3>
+        </div>
+        <div *ngIf="quizCompleted && viewResultsFlag" class="text-center alert alert-info mt-3">
+            <h4>Your Final Score: {{ finalResult.total_score }} / {{ quizData?.questions?.length }}</h4>
+            <button class="btn btn-success w-100 mt-3" (click)="goToHome()" >
+                Go to home
+            </button>    
+        </div>
+    </div>
+  </div>

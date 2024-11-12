@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NgIf } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-signin',
@@ -11,9 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [ReactiveFormsModule, NgIf],
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.scss',
-  providers: [
-    HttpClientModule
-  ],
+ 
 })
 export class SigninComponent {
   authForm: FormGroup;
@@ -24,7 +21,6 @@ export class SigninComponent {
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
-    console.log(this.tab)
   }
 
   setTab(tab: 'signin' | 'signup') {
@@ -53,11 +49,9 @@ export class SigninComponent {
     this.authService.signin({username, password}).subscribe({
       next: (response) => {
         this.router.navigate(['/home']);
-        // On successful login, navigate to home or dashboard
         console.log('Signed in successfully', response);
       },
       error: (error) => {
-        // this.errorMessage = 'Invalid credentials, please try again.';
         console.error('Signin error', error);
       }
     });
@@ -67,11 +61,9 @@ export class SigninComponent {
     this.authService.signup({username, password}).subscribe({
       next: (response) => {
         this.router.navigate(['/home']);
-        // On successful login, navigate to home or dashboard
         console.log('Registered successfully', response);
       },
       error: (error) => {
-        // this.errorMessage = 'Invalid credentials, please try again.';
         console.error('Register error', error);
       }
     });

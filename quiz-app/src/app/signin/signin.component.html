@@ -4,7 +4,6 @@
 	</div>
     <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
       
-		<!-- Tabs -->
 		<ul class="nav nav-tabs mb-3">
 			<li class="nav-item">
 				<a class="nav-link" [class.active]="tab === 'signin'" (click)="setTab('signin')">Sign In</a>
@@ -15,22 +14,18 @@
 		</ul>
 
 		<form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-			<!-- Username Field -->
 			<div class="mb-3">
 			<label for="username" class="form-label">Username</label>
 			<input type="text" id="username" formControlName="username" class="form-control" />
-			<!-- Validation Error for Username -->
 			<div *ngIf="authForm.get('username')?.touched && authForm.get('username')?.invalid" class="text-danger">
 				<small *ngIf="authForm.get('username')?.hasError('required')">Username is required.</small>
 				<small *ngIf="authForm.get('username')?.hasError('minlength')">Username must be at least 3 characters long.</small>
 			</div>
 			</div>
 	
-			<!-- Password Field -->
 			<div class="mb-3">
 			<label for="password" class="form-label">Password</label>
 			<input type="password" id="password" formControlName="password" class="form-control" />
-			<!-- Validation Error for Password -->
 			<div *ngIf="authForm.get('password')?.touched && authForm.get('password')?.invalid" class="text-danger">
 				<small *ngIf="authForm.get('password')?.hasError('required')">Password is required.</small>
 				<small *ngIf="authForm.get('password')?.hasError('minlength')">Password must be at least 6 characters long.</small>

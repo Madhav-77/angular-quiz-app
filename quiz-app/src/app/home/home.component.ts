@@ -3,6 +3,7 @@ import { NgFor } from '@angular/common';
 import { QuizService } from '../services/quiz.service';
 import { IQuizList } from '../interfaces/quiz.interface';
 import { HeaderComponent } from '../header/header.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +15,9 @@ import { HeaderComponent } from '../header/header.component';
 export class HomeComponent {
   quizList: IQuizList[] = [];
   selectedQuiz: string | null = null;
+  selectedQuizId: number | null = null;
 
-  constructor(private quizService: QuizService) {}
+  constructor(private quizService: QuizService, private router: Router) {}
 
   ngOnInit(): void {
     this.getQuizList();
@@ -28,20 +30,16 @@ export class HomeComponent {
     });
   }
   
-  // Method to handle quiz selection from dropdown
   selectQuiz(id: number): void {
     this.selectedQuiz = this.quizList.find(obj => obj.id == id)!.title;
+    this.selectedQuizId = id;
   }
 
-  // Method for creating a quiz
   createQuiz(): void {
-    console.log('Create Quiz clicked');
-    // Add your create quiz logic here
+    this.router.navigate(['create-quiz'])
   }
 
-  // Method for starting a quiz
   startQuiz(): void {
-    console.log(`Starting quiz: ${this.selectedQuiz}`);
-    // Add your start quiz logic here
+    this.router.navigate(['start-quiz', this.selectedQuizId])
   }
 }

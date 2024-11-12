@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -9,9 +9,9 @@ import { IUser } from '../interfaces/auth.interface';
 })
 export class AuthService {
 
-  private apiUrl = `${environment.apiUrl}user/api`;  // Backend API URL
+  private apiUrl = `${environment.apiUrl}user/api`;
   private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public currentUser$: Observable<any> = this.currentUserSubject.asObservable();
+  public currentUser: Observable<any> = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -19,8 +19,9 @@ export class AuthService {
   signup(user: IUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register/`, user).pipe(
       map(response => {
-        this.storeToken(response.access);  // Store token in localStorage or session
-        this.currentUserSubject.next(response.data); // Update current user observable
+        this.storeToken(response.access);
+        this.currentUserSubject.next(response.data);
+        localStorage.setItem("currentUser", JSON.parse(response.data));
         return response;
       }),
       catchError(this.handleError)
@@ -31,19 +32,9 @@ export class AuthService {
   signin(user: IUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login/`, user).pipe(
       map(response => {
-        this.storeToken(response.access);  // Store token in localStorage or session
-        this.currentUserSubject.next(response); // Update current user observable
-        return response;
-      }),
-      catchError(this.handleError)
-    );
-  }
-
-  // Generate a new JWT token
-  generateToken(refreshToken: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/token`, { refreshToken }).pipe(
-      map(response => {
-        this.storeToken(response.token);  // Store the new token
+        this.storeToken(response.access);
+        this.currentUserSubject.next(response);
+        localStorage.setItem("currentUser", JSON.stringify(response));
         return response;
       }),
       catchError(this.handleError)
@@ -53,7 +44,7 @@ export class AuthService {
   // Logout
   logout(): void {
     this.removeToken();
-    this.currentUserSubject.next(null); // Clear the current user
+    this.currentUserSubject.next(null);
   }
 
   isUserAuthenticated(){
@@ -66,10 +57,11 @@ export class AuthService {
 
   private removeToken(): void {
     localStorage.removeItem('jwt_token');
+    localStorage.removeItem("currentUser");
   }
 
   private handleError(error: any): Observable<never> {
     console.error(error);
-    throw error; // Proper error handling based on your application needs
+    throw error;
   }
 }
