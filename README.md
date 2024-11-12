@@ -21,6 +21,7 @@ Optimized for various devices and screen sizes.
 ## Table of Contents
 - [About](#project-overview)
 - [Project setup](#setting-up-the-project)
+- [Screenshots](#screenshots)
 - [Limitations](#limitation-of-the-current-version)
 - [Contributors](#contributors)
 
@@ -46,6 +47,10 @@ To run this project, ensure you have the following installed:
 **Run the application**:
 
     ng serve
+
+## Screenshots
+
+[Link to directory](https://github.com/Madhav-77/angular-quiz-app/tree/main/quiz-app/app-screenshots)
 
 ## Limitation of the current version
 Any quiz can be given only once per any user, to give the quiz again, entries for that quiz & user must be deleted using ```/api/quizzes/<quiz_id>/users/<user_id>/delete/``` api, it will require ```quiz_id``` & ```user_id``` parameters.
