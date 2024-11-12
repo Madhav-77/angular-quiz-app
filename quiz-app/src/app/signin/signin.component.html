@@ -1,1 +1,44 @@
-<p>signin works!</p>
+<div class="container d-flex justify-content-center align-items-center vh-100 flex-column">
+    <div class="text-center mb-4">
+        <h1>Welcome to the Quiz App</h1>
+	</div>
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+      
+		<ul class="nav nav-tabs mb-3">
+			<li class="nav-item">
+				<a class="nav-link" [class.active]="tab === 'signin'" (click)="setTab('signin')">Sign In</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" [class.active]="tab === 'signup'" (click)="setTab('signup')">Sign Up</a>
+			</li>
+		</ul>
+
+		<form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+			<div class="mb-3">
+			<label for="username" class="form-label">Username</label>
+			<input type="text" id="username" formControlName="username" class="form-control" />
+			<div *ngIf="authForm.get('username')?.touched && authForm.get('username')?.invalid" class="text-danger">
+				<small *ngIf="authForm.get('username')?.hasError('required')">Username is required.</small>
+				<small *ngIf="authForm.get('username')?.hasError('minlength')">Username must be at least 3 characters long.</small>
+			</div>
+			</div>
+	
+			<div class="mb-3">
+			<label for="password" class="form-label">Password</label>
+			<input type="password" id="password" formControlName="password" class="form-control" />
+			<div *ngIf="authForm.get('password')?.touched && authForm.get('password')?.invalid" class="text-danger">
+				<small *ngIf="authForm.get('password')?.hasError('required')">Password is required.</small>
+				<small *ngIf="authForm.get('password')?.hasError('minlength')">Password must be at least 6 characters long.</small>
+			</div>
+			</div>
+			<div *ngIf="tab == 'signin'">
+				<button type="submit" class="btn btn-primary w-100" [disabled]="authForm.invalid">Sign In</button>
+			</div>
+		
+			<div *ngIf="tab == 'signup'">
+				<button type="submit" class="btn btn-success w-100" [disabled]="authForm.invalid">Sign Up</button>
+			</div>
+		</form>
+  
+    </div>
+</div>
